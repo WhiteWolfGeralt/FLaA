@@ -1,0 +1,4 @@
+STATE -> Aa | Bb | A
+A-> d | 4
+B -> f | 5 | G G
+G -> #

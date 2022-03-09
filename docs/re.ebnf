@@ -1,0 +1,6 @@
+EXPR         ::= STATE DOP_STATE
+DOP_EXPR     ::= EXPR | eps
+STATE        ::= SIMPLE_STATE DOP_STATE
+DOP_STATE    ::= "*" | "|" STATE | eps
+SIMPLE_STATE ::= WORD | "(" EXPR ")"
+WORD         ::= <identifier>
