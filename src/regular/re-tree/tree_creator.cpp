@@ -80,20 +80,20 @@ void TreeCreator::create_tree() {
 				break;
 			}
 			case BAR: {
-				if (!op_stack.empty() && op_stack.top()->op_type == CONCAT) {
-					Node* concat_node = op_stack.top();
+				while (!op_stack.empty() && op_stack.top()->op_type == CONCAT) {
+					Node *concat_node = op_stack.top();
 					op_stack.pop();
 
-					Node* op1 = node_stack.top();
+					Node *op1 = node_stack.top();
 					node_stack.pop();
-					Node* op2 = node_stack.top();
+					Node *op2 = node_stack.top();
 					node_stack.pop();
 
 					concat_node = Tree4Re::add(op1, concat_node);
 					concat_node = Tree4Re::add(op2, concat_node);
 					node_stack.push(concat_node);
-
 				}
+
 				Node* new_node = new Node();
 				new_node->is_operation = true;
 				new_node->op_type = CHOICE;
