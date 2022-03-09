@@ -7,10 +7,10 @@
 
 Node* Tree4Re::add(Node* adding, Node* par) {
 	assert(par != nullptr);
-	if (par->left) {
-		par->right = adding;
-	} else {
+	if (par->right) {
 		par->left = adding;
+	} else {
+		par->right = adding;
 	}
 	adding->parent = par;
 	return par;
