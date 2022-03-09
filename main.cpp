@@ -3,7 +3,7 @@
 
 int main() {
 	TreeCreator treeCreator;
-	treeCreator.init("../tests/regular_brackets.txt");
+	treeCreator.init("../tests/regular_example.txt");
 	treeCreator.create_tree();
 	treeCreator.print_tree();
 }

@@ -24,7 +24,8 @@ void TreeCreator::create_tree() {
 					if (iter.sym() == "{eps}") {
 						new_node->is_nullable = true;
 					} else {
-						new_node->first = new_node->follow = iter.sym();
+						new_node->first.insert(iter.sym());
+						new_node->follow.insert(iter.sym());
 					}
 					new_node->symbol = iter.sym();
 					node_stack.push(new_node);
@@ -32,6 +33,12 @@ void TreeCreator::create_tree() {
 					prev_bar = false;
 				} else {
 					Node* new_node = new Node();
+					if (iter.sym() == "{eps}") {
+						new_node->is_nullable = true;
+					} else {
+						new_node->first.insert(iter.sym());
+						new_node->follow.insert(iter.sym());
+					}
 					new_node->symbol = iter.sym();
 					node_stack.push(new_node);
 
@@ -60,6 +67,7 @@ void TreeCreator::create_tree() {
 					node_stack.pop();
 					op = Tree4Re::add(op1, op);
 					op = Tree4Re::add(op2, op);
+					Tree4Re::fill_node(op);
 					node_stack.push(op);
 				}
 				Node* op = op_stack.top();
@@ -76,6 +84,7 @@ void TreeCreator::create_tree() {
 				Node* operand = node_stack.top();
 				node_stack.pop();
 				new_node = Tree4Re::add(operand, new_node);
+				Tree4Re::fill_node(new_node);
 				node_stack.push(new_node);
 				break;
 			}
@@ -91,6 +100,7 @@ void TreeCreator::create_tree() {
 
 					concat_node = Tree4Re::add(op1, concat_node);
 					concat_node = Tree4Re::add(op2, concat_node);
+					Tree4Re::fill_node(concat_node);
 					node_stack.push(concat_node);
 				}
 
@@ -120,10 +130,13 @@ void TreeCreator::create_tree() {
 		node_stack.pop();
 		op = Tree4Re::add(op1, op);
 		op = Tree4Re::add(op2, op);
+		Tree4Re::fill_node(op);
 		node_stack.push(op);
 	}
 	this->root = node_stack.top();
 	node_stack.pop();
+
+	Tree4Re::tree2dot(this->root);
 }
 
 void TreeCreator::print_tree(Node *node) {
