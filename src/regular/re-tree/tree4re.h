@@ -6,8 +6,10 @@
 #define SCANNER_CPP_TREE4RE_H
 
 #include <string>
+#include <set>
 
 using std::string;
+using std::set;
 
 enum OpType {
 	/// operation *
@@ -24,8 +26,8 @@ typedef struct Node {
 	bool is_operation = false;
 
 	/* if operation */
-	string first;
-	string follow;
+	set<string> first;
+	set<string> follow;
 	OpType op_type = NONE;
 	bool is_nullable = false;
 
@@ -36,8 +38,11 @@ typedef struct Node {
 } Node;
 
 class Tree4Re {
+	static void tree2dot_rec(Node*, std::ofstream&);
 public:
 	static Node* add(Node*, Node*);
+	static void fill_node(Node*);
+	static void tree2dot(Node*);
 };
 
 
