@@ -7,19 +7,14 @@
 
 using std::cout;
 
-void Scanner_re::init(const string &filename) {
-	this->input.open(filename);
-	if ( !this->input.is_open() ) {
-		cout << "Scanner: wrong filename!\n";
-		exit(1);
-	}
+void Scanner_re::init(const string &expr) {
+	this->buffer = expr + '\0';
 	this->gc();
 }
 
 void Scanner_re::gc() {
-	if ( !this->input.get(this->c) ){
-		this->c = '\0';
-	};
+	this->c = this->buffer[0];
+	this->buffer = string(this->buffer.begin() + 1, this->buffer.end());
 }
 
 Lex_re Scanner_re::get_lex() {

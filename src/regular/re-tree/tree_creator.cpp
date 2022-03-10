@@ -7,8 +7,8 @@
 
 using std::cout;
 
-void TreeCreator::init(const string& filename) {
-	this->parser_re.init(filename);
+void TreeCreator::init(const string& expr) {
+	this->parser_re.init(expr);
 	this->parser_re.parse();
 	this->lex_vector = this->parser_re.get_lexemes();
 }

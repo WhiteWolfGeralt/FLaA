@@ -26,14 +26,13 @@ public:
 };
 
 class Scanner_re {
-	char c{};
-	std::ifstream input;
+	char c;
+	string buffer;
 
 	void gc();
 public:
 	Lex_re get_lex();
-	void init(const string& filename);
-	~Scanner_re() { input.close(); }
+	void init(const string&);
 };
 
 #endif //SCANNER_CPP_SCANNER_RE_H

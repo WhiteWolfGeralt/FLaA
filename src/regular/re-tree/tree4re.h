@@ -25,13 +25,10 @@ enum OpType {
 typedef struct Node {
 	bool is_operation = false;
 
-	/* if operation */
 	set<string> first;
 	set<string> follow;
 	OpType op_type = NONE;
 	bool is_nullable = false;
-
-	/* if list(single symbol)*/
 	string symbol;
 
 	struct Node *left = nullptr, *right = nullptr, *parent = nullptr;

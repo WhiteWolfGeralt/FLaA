@@ -3,7 +3,7 @@
 
 int main() {
 	TreeCreator treeCreator;
-	treeCreator.init("../tests/regular_example.txt");
+	treeCreator.init("*ma|b|(cd)*");
 	treeCreator.create_tree();
 	treeCreator.print_tree();
 }
