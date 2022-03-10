@@ -154,5 +154,5 @@ void TreeCreator::print_tree(Node *node) {
 }
 
 void TreeCreator::print_tree() {
-	this->print_tree(this->root);
+	Tree4Re::tree2dot(this->root);
 }

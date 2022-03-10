@@ -28,7 +28,12 @@ void Parser_re::parse() {
 	cout << "Parser: wrong symbol.\n";
 	this->print_queue();
 	cout << wrong_sym + '\n';
-	for (int i = 0; i < this->lex_vector.size(); i++) { cout << ' '; }
+	for (const auto& iter: this->lex_vector) {
+		if (iter.sym() == "{eps}") {
+			cout << "    ";
+		}
+		cout << ' ';
+	}
 	cout << "^ here\n";
 	exit(0);
 }

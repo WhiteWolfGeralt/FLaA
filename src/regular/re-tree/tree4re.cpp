@@ -6,6 +6,9 @@
 #include <cassert>
 #include <fstream>
 
+std::ofstream Tree4Re::output;
+bool Tree4Re::first = false, Tree4Re::follow = false, Tree4Re::nullable = false;
+
 Node* Tree4Re::add(Node* adding, Node* par) {
 	assert(par != nullptr);
 	if (par->right) {
@@ -62,35 +65,56 @@ void Tree4Re::fill_node(Node* node) {
 	}
 }
 
-void Tree4Re::tree2dot(Node *root) {
-	std::ofstream output;
+void Tree4Re::tree2dot(Node *root, bool nullable_, bool first_, bool follow_) {
 	output.open("../docs/tree4re.dot");
+	nullable = nullable_; first = first_; follow = follow_;
 	output << "digraph G {\n";
 
-	tree2dot_rec(root, output);
+	tree2dot_rec(root);
 
 	output << "}";
 	output.close();
 }
 
-void Tree4Re::tree2dot_rec(Node *root, std::ofstream& output) {
+void Tree4Re::tree2dot_rec(Node *root) {
 	assert(root != nullptr);
 	auto address_par = (unsigned long) root;
+	string node_info = root->symbol;
+
+	if (nullable) {
+		node_info += root->is_nullable ? "  T\\n" : "  F\\n";
+	}
+
+	if (first) {
+		node_info += "first: ";
+		for (const auto &iter: root->first) {
+			node_info += iter;
+		}
+		node_info += "\\n";
+	}
+
+	if (follow) {
+		node_info += "follow: ";
+		for (const auto &iter: root->follow) {
+			node_info += iter;
+		}
+	}
 
 	if (root->left == nullptr && root->right == nullptr) {
-		output << "\t" << address_par << " [label=\"" << root->symbol << "\"] [shape=triangle]\n";
+		output << "\t" << address_par << " [label=\"" << node_info << "\"] [shape=triangle]\n";
 		return;
 	} else {
-		output << "\t" << address_par << " [label=\"" << root->symbol << "\"] [shape=box]\n";
+		output << "\t" << address_par << " [label=\"" << node_info << "\"] [shape=box]\n";
 	}
+
 	if (root->left != nullptr) {
 		auto address_child = (unsigned long) root->left;
 		output << "\t" << address_par << " -> " << address_child << "\n";
-		tree2dot_rec(root->left, output);
+		tree2dot_rec(root->left);
 	}
 	if (root->right != nullptr) {
 		auto address_child = (unsigned long) root->right;
 		output << "\t" << address_par << " -> " << address_child << "\n";
-		tree2dot_rec(root->right, output);
+		tree2dot_rec(root->right);
 	}
 }

@@ -35,11 +35,13 @@ typedef struct Node {
 } Node;
 
 class Tree4Re {
-	static void tree2dot_rec(Node*, std::ofstream&);
+	static bool nullable, first, follow;
+	static std::ofstream output;
+	static void tree2dot_rec(Node*);
 public:
 	static Node* add(Node*, Node*);
 	static void fill_node(Node*);
-	static void tree2dot(Node*);
+	static void tree2dot(Node*, bool = false, bool = false, bool = false);
 };
 
 
